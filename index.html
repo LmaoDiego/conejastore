@@ -1,0 +1,675 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Top 20 Compradores — Aura Dragon Ball</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #07040a;
+            --card-bg-gradient: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.2));
+            --border-color: rgba(255,255,255,0.04);
+            --text-light: #e6eef8;
+            --text-muted: #9aa0b4;
+            --accent-1: #ffb347; /* energy orange */
+            --accent-2: #ff7b7b; /* power red */
+            --accent-3: #8be9fd; /* ki light blue */
+            --glass: rgba(255,255,255,0.04);
+
+            /* Colores específicos para ranks y badges (afinación) */
+            --rank-1-color: #ffd700; /* Gold */
+            --rank-2-color: #8be9fd; /* Light Blue */
+            --rank-3-color: #ffb347; /* Orange */
+
+            --badge-ssj-god-start: #ffc720;
+            --badge-ssj-god-end: #ff8c00;
+            --badge-rival-start: #8be9fd;
+            --badge-rival-end: #5fa7f0;
+            --badge-maestro-start: #ff7b7b;
+            --badge-maestro-end: #e05e5e;
+
+            /* --- NUEVAS VARIABLES DE COLOR PARA EL AURA (DROP-SHADOW) --- */
+            --aura-tier-1-color: #ffc107; /* Dorado para Kakarot Supremo */
+            --aura-tier-2-color: #03a9f4; /* Azul brillante para Vegeta Príncipe */
+            --aura-tier-3-color: #ff5a5a; /* Rojo para el aura de Tier 3 (Ki denso) */
+            --aura-tier-4-color: #bbdefb; /* Gris/Blanco para el resto */
+            /* --- FIN NUEVAS VARIABLES --- */
+        }
+
+        *{
+            box-sizing:border-box;
+            -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
+        }
+        html,body{
+            height:100%;margin:0;
+            font-family:Montserrat,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;
+            overflow-x: hidden; /* Evita desbordamiento horizontal por auras */
+        }
+        body {
+            /* === MODIFICACIÓN DEL FONDO AQUÍ === */
+            background: radial-gradient(1200px 600px at 10% 10%, rgba(139,233,253,0.06), transparent 8%), /* Reducir ligeramente opacidad */
+                            radial-gradient(1000px 500px at 90% 90%, rgba(255,179,71,0.04), transparent 8%), /* Reducir ligeramente opacidad */
+                            url('fondo2.jpg') no-repeat center center fixed,
+                            var(--bg); /* Color de fondo base */
+            background-size: cover; /* Asegura que la imagen cubra todo */
+            /* === FIN MODIFICACIÓN === */
+
+            color:var(--text-light);
+            -webkit-font-smoothing:antialiased;
+            padding:32px;
+            line-height: 1.5;
+        }
+
+        .wrap{max-width:1100px;margin:0 auto}
+
+        header {
+            display:flex;align-items:center;gap:16px;margin-bottom:24px;
+        }
+        .logo {
+    /* Degradado de fondo más vibrante y energético, con un toque "saiyajin" */
+    /* Usamos tus variables existentes pero con un color intermedio más impactante */
+    background: linear-gradient(135deg, var(--aura-tier-1-color), #ff4500, var(--aura-tier-2-color)); /* Dorado, Naranja vibrante, Azul */
+    padding: 16px 20px; /* Un poco más de padding para que respire */
+    border-radius: 15px; /* Bordes ligeramente más redondeados */
+    
+    /* Sombra más dramática y con un "aura" de energía, además de una sombra interior */
+    box-shadow: 
+        0 8px 30px rgba(255,165,0,0.4), /* Sombra exterior naranja/dorada más fuerte */
+        0 0 40px rgba(255,165,0,0.3),   /* Un segundo glow más amplio y sutil */
+        inset 0 -8px 25px rgba(0,0,0,0.4); /* Sombra interior más pronunciada */
+    
+    display: flex;
+    align-items: center;
+    gap: 16px; /* Aumentamos la separación entre el icono y el texto */
+    
+    /* Añadimos un pequeño borde para definirlo más y darle cohesión */
+    border: 1px solid rgba(255,165,0,0.6); 
+    
+    /* Opcional: una ligera inclinación para darle dinamismo, muy DBZ */
+    transform: skewX(-5deg); 
+    transition: all 0.3s ease-in-out; /* Transición para efectos hover si añades uno después */
+}
+
+/* Efecto al pasar el ratón por el logo (opcional, pero mejora la interactividad) */
+.logo:hover {
+    transform: skewX(-5deg) scale(1.03); /* Ligeramente más grande al pasar el ratón */
+    box-shadow: 
+        0 10px 40px rgba(255,165,0,0.6), 
+        0 0 50px rgba(255,165,0,0.4), 
+        inset 0 -10px 30px rgba(0,0,0,0.5);
+}
+
+.logo i {
+    font-size: 28px; /* Icono del dragón más grande y prominente */
+    color: white; 
+    
+    /* Resplandor del icono más potente y con un color más definido, estilo energía Ki */
+    text-shadow: 
+        0 0 15px rgba(255,255,255,0.9), /* Un glow blanco brillante y fuerte */
+        0 0 25px var(--accent-1); /* Un segundo glow más amplio con el color de acento azul/eléctrico */
+    
+    /* Ligera animación de "energía" para el icono del dragón */
+    animation: bounceDragon 2s infinite alternate; 
+}
+        .header-button {
+            background: var(--glass);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px 14px;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        .header-button:hover {
+            color: var(--text-light);
+            background: rgba(255,255,255,0.08);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        /* grid */
+        .grid{
+            display:grid;grid-template-columns: 1fr 360px;gap:20px;align-items:start;
+        }
+
+        /* list & cards */
+        .card{
+            background:var(--card-bg-gradient);
+            border-radius:14px;padding:18px;box-shadow: 0 6px 30px rgba(0,0,0,0.7);border:1px solid var(--border-color);
+        }
+        .card h2 {
+            font-family:Orbitron, sans-serif;margin:0 0 16px;font-size:22px;
+            text-shadow: 0 0 12px rgba(139,233,253,0.2);
+        }
+
+        .list{list-style:none;padding:8px;margin:0;display:flex;flex-direction:column;gap:12px}
+        .item{
+            display:flex;align-items:center;gap:12px;padding:12px;border-radius:14px;
+            background:linear-gradient(90deg, rgba(255,255,255,0.015), transparent);
+            transition:transform .22s ease, box-shadow .22s ease, background 0.2s ease;
+            position:relative;overflow:hidden; /* Keep auras contained but visible */
+            z-index: 1; /* Ensure item content is above aura */
+            border: 1px solid transparent; /* Base border for hover effect */
+            isolation: isolate; /* Para un correcto contexto de apilamiento */
+        }
+        .item:hover{
+            transform:translateY(-5px);
+            box-shadow:0 14px 40px rgba(0,0,0,0.6), inset 0 0 10px rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.08);
+        }
+
+        .rank {
+            min-width:60px;height:60px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:700;font-family:Orbitron,monospace;
+            background:linear-gradient(180deg,rgba(255,255,255,0.03),transparent);
+            box-shadow:inset 0 -6px 16px rgba(0,0,0,0.5);
+            font-size: 24px;
+            color: var(--text-muted);
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2; /* Make rank number appear above any inner aura if needed */
+        }
+
+        .meta{flex:1;display:flex;flex-direction:column}
+        .name{font-weight:700;font-size:17px; display: flex; align-items: center;}
+        .sub{font-size:13px;color:var(--text-muted); margin-top: 2px;}
+
+        .badge{
+            font-size:12px;padding:3px 8px;border-radius:999px;
+            margin-left: 8px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            text-shadow: 0 0 4px rgba(0,0,0,0.4);
+            box-shadow: inset 0 1px 3px rgba(255,255,255,0.2), 0 1px 4px rgba(0,0,0,0.3);
+            white-space: nowrap; /* Prevent badge from wrapping */
+        }
+
+        /* Specific badge styles */
+        .badge.ssj-god { background: linear-gradient(90deg, var(--badge-ssj-god-start), var(--badge-ssj-god-end)); color: #3a2a00; }
+        .badge.rival { background: linear-gradient(90deg, var(--badge-rival-start), var(--badge-rival-end)); color: #0a203a; }
+        .badge.maestro { background: linear-gradient(90deg, var(--badge-maestro-start), var(--badge-maestro-end)); color: #3a0a0a; }
+        .badge.default { background: var(--glass); border:1px solid var(--border-color); color: var(--text-muted); font-weight: 400; text-shadow: none; box-shadow: none;}
+
+
+        /* --- ESTILOS DEL AURA (¡ACTUALIZADO PARA USAR IMAGEN!) --- */
+        .aura{
+            position:absolute;
+            top: 50%;
+            left: 50%;
+            width: 950%; /* Más grande que el contenedor para la imagen */
+            height: 250%;
+            transform: translate(-50%, -50%) rotate(0deg); /* Centrado y rotación inicial */
+            background-image: url('fondo.jpg'); /* <<< ¡REEMPLAZA ESTO! >>> */
+            background-size: cover;
+            background-position: center;
+            opacity: 0.9; /* Opacidad inicial */
+            pointer-events:none; /* No interfiere con clics */
+            z-index:-1; /* Detrás del contenido */
+        }
+        /* Eliminar el ::after ya que no lo usamos para el aura principal */
+        .item::after { 
+            display: none; /* O puedes quitar esta regla si no lo usas en ningún tier */
+        }
+
+        /* --- FILTROS Y ANIMACIONES ESPECÍFICOS PARA CADA TIER --- */
+        /* Tier 1 — Ultra Instinto (Aura Dorada) */
+        .tier-1 .aura{
+            filter: brightness(1.5) blur(10px) drop-shadow(0 0 40px var(--aura-tier-1-color));
+            animation: pulseAuraTier1 4s infinite alternate, rotateAura 20s linear infinite;
+        }
+        .tier-1 .rank {
+            background: linear-gradient(180deg, var(--rank-1-color), transparent);
+            box-shadow: inset 0 -6px 16px rgba(0,0,0,0.5), 0 0 25px rgba(255, 215, 0, 0.6);
+            color: #fff;
+            transform: scale(1.1);
+            text-shadow: 0 0 10px var(--rank-1-color);
+        }
+
+        /* Tier 2 — SSJ2 con electricidad (Aura Azul) */
+        .tier-2 .aura{
+            filter: brightness(1.5) blur(10px) drop-shadow(0 0 40px var(--aura-tier-2-color));
+            animation: pulseAuraTier2 4s infinite alternate, rotateAura 20s linear infinite;
+        }
+        .tier-2 .rank {
+            background: linear-gradient(180deg, var(--rank-2-color), transparent);
+            box-shadow: inset 0 -6px 16px rgba(0,0,0,0.5), 0 0 20px rgba(139, 233, 253, 0.5);
+            color: #fff;
+            transform: scale(1.06);
+            text-shadow: 0 0 8px var(--rank-2-color);
+        }
+
+        /* Tier 3 — Aura más potente estilo ki denso (Aura Roja/Naranja) */
+        .tier-3 .aura{
+            filter: brightness(1.5) blur(10px) drop-shadow(0 0 40px var(--aura-tier-3-color));
+            animation: pulseAuraTier3 4s infinite alternate, rotateAura 20s linear infinite;
+        }
+        .tier-3 .rank {
+            background: linear-gradient(180deg, var(--rank-3-color), transparent);
+            box-shadow: inset 0 -6px 16px rgba(0,0,0,0.5), 0 0 15px rgba(255, 179, 71, 0.4);
+            color: #fff;
+            transform: scale(1.03);
+            text-shadow: 0 0 6px var(--rank-3-color);
+        }
+
+        /* Tier 4 — Aura base (Aura más sutil, azul claro) */
+        .tier-4 .aura {
+            filter: brightness(1.5) blur(10px) drop-shadow(0 0 30px var(--aura-tier-4-color));
+            animation: pulseAuraTier4 4s infinite alternate, rotateAura 20s linear infinite;
+        }
+        .tier-4 .rank {
+            color: var(--text-muted);
+            transform: scale(1);
+            box-shadow:inset 0 -6px 16px rgba(0,0,0,0.5);
+            text-shadow: none;
+        }
+
+        /* --- DEFINICIÓN DE ANIMACIONES --- */
+        @keyframes rotateAura {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        @keyframes pulseAuraTier1 {
+            0% { opacity: 0.7; transform: translate(-50%, -50%) scale(0.9) rotate(0deg); filter: brightness(1.5) blur(8px) drop-shadow(0 0 30px var(--aura-tier-1-color)); }
+            50% { opacity: 0.9; transform: translate(-50%, -50%) scale(1.1) rotate(180deg); filter: brightness(2.5) blur(12px) drop-shadow(0 0 60px var(--aura-tier-1-color)); }
+            100% { opacity: 0.7; transform: translate(-50%, -50%) scale(0.9) rotate(360deg); filter: brightness(1.5) blur(8px) drop-shadow(0 0 30px var(--aura-tier-1-color)); }
+        }
+        @keyframes pulseAuraTier2 {
+            0% { opacity: 0.4; transform: translate(-50%, -50%) scale(0.9) rotate(0deg); filter: brightness(1.2) blur(8px) drop-shadow(0 0 30px var(--aura-tier-2-color)); }
+            50% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.1) rotate(180deg); filter: brightness(1.8) blur(12px) drop-shadow(0 0 60px var(--aura-tier-2-color)); }
+            100% { opacity: 0.4; transform: translate(-50%, -50%) scale(0.9) rotate(360deg); filter: brightness(1.2) blur(8px) drop-shadow(0 0 30px var(--aura-tier-2-color)); }
+        }
+        @keyframes pulseAuraTier3 {
+            0% { opacity: 0.3; transform: translate(-50%, -50%) scale(0.9) rotate(0deg); filter: brightness(1.2) blur(8px) drop-shadow(0 0 30px var(--aura-tier-3-color)); }
+            50% { opacity: 0.5; transform: translate(-50%, -50%) scale(1.1) rotate(180deg); filter: brightness(1.5) blur(12px) drop-shadow(0 0 60px var(--aura-tier-3-color)); }
+            100% { opacity: 0.3; transform: translate(-50%, -50%) scale(0.9) rotate(360deg); filter: brightness(1.2) blur(8px) drop-shadow(0 0 30px var(--aura-tier-3-color)); }
+        }
+        @keyframes pulseAuraTier4 {
+            0% { opacity: 0.2; transform: translate(-50%, -50%) scale(0.95) rotate(0deg); filter: brightness(1.0) blur(6px) drop-shadow(0 0 20px var(--aura-tier-4-color)); }
+            50% { opacity: 0.4; transform: translate(-50%, -50%) scale(1.05) rotate(180deg); filter: brightness(1.3) blur(10px) drop-shadow(0 0 40px var(--aura-tier-4-color)); }
+            100% { opacity: 0.2; transform: translate(-50%, -50%) scale(0.95) rotate(360deg); filter: brightness(1.0) blur(6px) drop-shadow(0 0 20px var(--aura-tier-4-color)); }
+        }
+
+        /* --- ESTILOS DEL CONTENIDO DEL ITEM (SIN CAMBIOS PRINCIPALES) --- */
+        .item > *:not(.aura) {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* pill styles */
+        .pill{
+            display:inline-flex;align-items:center;gap:6px;padding:4px 9px;border-radius:999px;
+            font-weight:700;color:#0b1220;
+            font-size: 13px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            white-space: nowrap;
+        }
+        .pill i {
+            font-size: 13px; /* Icon size within pill */
+        }
+        /* Specific pill colors */
+        .item:nth-child(1) .pill { background: linear-gradient(90deg, var(--accent-2), #ff5a5a); color: #2a0000; } /* Elite - Red */
+        .item:nth-child(2) .pill { background: linear-gradient(90deg, var(--accent-3), #5ac3ff); color: #0a203a; } /* Top - Blue */
+        .item:nth-child(3) .pill { background: linear-gradient(90deg, var(--accent-1), #ff9a2e); color: #2a1a00; } /* Pro - Orange */
+        .pill.default { /* Default '+' pill */
+            background: var(--glass);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            box-shadow: none;
+            padding: 4px 10px;
+            font-weight: 500;
+        }
+
+
+        /* right column (aside) */
+        .right{display:flex;flex-direction:column;gap:16px}
+        .right .card { padding: 20px; } /* Slightly more padding for right column cards */
+
+        .right h3 {
+            font-family: Orbitron, sans-serif;
+            font-size: 20px;
+            margin: 0 0 12px;
+            text-shadow: 0 0 8px rgba(255,255,255,0.1);
+        }
+
+        .stats{
+            display:flex;gap:10px;align-items:center;
+            padding: 15px; /* Ajuste para el padding interno */
+        }
+        .stat{
+            flex:1;padding:15px 10px;border-radius:12px;
+            background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);
+            text-align:center;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 18px rgba(0,0,0,0.4);
+            transition: all 0.2s ease;
+        }
+        .stat:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+        }
+
+        .stat h3{
+            margin:0;font-family:Orbitron;font-size:22px;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            color: var(--text-light);
+            text-shadow: 0 0 10px rgba(255,255,255,0.1);
+        }
+        .stat h3 i {
+            font-size: 20px;
+        }
+        .stat p{margin:4px 0 0;color:var(--text-muted);font-size:13px; line-height: 1.3;}
+
+        /* Stat icons with animations */
+        .stat-icon.fire { color: var(--accent-2); animation: pulseRed 1.8s infinite alternate ease-in-out; }
+        .stat-icon.bolt { color: var(--accent-3); animation: pulseBlue 1.8s infinite alternate ease-in-out; }
+        .stat-icon.calendar { color: var(--accent-1); }
+
+        @keyframes pulseRed {
+            0% { transform: scale(1); opacity: 0.8; text-shadow: 0 0 6px rgba(255,123,123,0.7); }
+            100% { transform: scale(1.1); opacity: 1; text-shadow: 0 0 12px rgba(255,123,123,1); }
+        }
+        @keyframes pulseBlue {
+            0% { transform: scale(1); opacity: 0.8; text-shadow: 0 0 6px rgba(139,233,253,0.7); }
+            100% { transform: scale(1.1); opacity: 1; text-shadow: 0 0 12px rgba(139,233,253,1); }
+        }
+
+        .right ol {
+            margin:0 0 0 20px;
+            color:var(--text-muted);
+            font-size:14px;
+            line-height: 1.7;
+            list-style-type: decimal;
+        }
+        .right ol li::marker {
+            color: var(--accent-3);
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+
+        footer{margin-top:24px;color:var(--text-muted);font-size:13px;text-align:center}
+
+        /* responsive */
+        @media(max-width:880px){
+            body { padding: 20px; }
+            .grid{grid-template-columns:1fr; gap: 24px;}
+            .right{order:2}
+            header { flex-wrap: wrap; justify-content: center; text-align: center; }
+            .header-buttons { margin-top: 15px; margin-left: 0; width: 100%; justify-content: center; }
+            .logo { flex-direction: column; text-align: center; }
+            h1 { font-size: 20px; }
+            .lead { font-size: 13px; }
+            .item { padding: 10px; }
+            .rank { min-width: 50px; height: 50px; font-size: 20px; }
+            .name { font-size: 15px; }
+            .badge { margin-left: 6px; padding: 2px 6px; font-size: 11px; }
+            .pill { font-size: 12px; padding: 3px 8px; }
+            .pill i { font-size: 12px; }
+            .stats { flex-wrap: wrap; }
+            .stat { flex-basis: 48%; } /* Two columns on small screens */
+        }
+        @media(max-width:480px) {
+            .stat { flex-basis: 100%; } /* One column on very small screens */
+            .logo { width: 100%; }
+        }
+
+		/* --- MEJORA DEL ESTILO DEL BOTÓN DEL SORTEO (REEMPLAZA EL ANTERIOR) --- */
+
+.raffle-button {
+    /* Fondo con un degradado de energía vibrante y un color más distintivo */
+    background: linear-gradient(90deg, #8A2BE2, #4B0082); /* De un violeta vibrante a un púrpura oscuro */
+    color: #FFD700; /* Texto dorado para un contraste de lujo */
+    border: 2px solid #FFD700; /* Borde dorado que le da un toque premium */
+    padding: 14px 30px; /* Un poco más de padding para que sea más imponente */
+    border-radius: 35px; /* Más redondeado, estilo cápsula */
+    font-size: 18px; /* Texto más grande */
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.4s ease-in-out; /* Transición más larga y suave */
+    box-shadow: 0 0 15px rgba(138,43,226,0.6), 0 0 30px rgba(75,0,130,0.4); /* Glow inicial púrpura */
+    display: inline-flex;
+    align-items: center;
+    gap: 10px; /* Espacio entre el texto y el icono */
+    text-transform: uppercase; /* Texto en mayúsculas para más impacto */
+    letter-spacing: 1px; /* Espaciado de letras */
+}
+
+.raffle-button i {
+    font-size: 20px; /* Icono un poco más grande para acompañar el texto */
+    transition: transform 0.4s ease-in-out; /* Transición para el icono también */
+}
+
+.raffle-button:hover {
+    /* Efecto "carga de energía" al pasar el ratón */
+    background: linear-gradient(90deg, #4B0082, #8A2BE2); /* Invertir degradado */
+    transform: translateY(-4px) scale(1.02); /* Se eleva y se agranda ligeramente */
+    border-color: #FFEF00; /* Borde se vuelve amarillo más brillante */
+    color: #FFEF00; /* Texto también más brillante */
+    box-shadow: 
+        0 0 25px rgba(138,43,226,0.9), /* Glow púrpura más intenso */
+        0 0 50px rgba(255,223,0,0.7); /* Nuevo glow dorado fuerte */
+    
+}
+
+.raffle-button:hover i {
+    transform: translateX(5px) rotate(360deg); /* El icono se mueve y gira */
+    color: #FFEF00; /* Icono se vuelve amarillo brillante */
+}
+
+.raffle-button:active {
+    transform: translateY(-1px) scale(0.98); /* Pequeño efecto de "clic" */
+    box-shadow: 0 0 10px rgba(138,43,226,0.5);
+}
+
+/* --- CSS MODIFICADO PARA .prize-image --- */
+.prize-image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    max-width: 100%;
+    border-radius: 50%; 
+    box-shadow: 0 0 25px rgba(255,165,0,0.7), 0 0 50px rgba(255,165,0,0.4);
+    transition: transform 0.3s ease;
+
+    /* --- ¡Nuevas propiedades para centrar la imagen! --- */
+    display: block; /* La imagen se comporta como un bloque */
+    margin: 0 auto; /* Márgenes automáticos izquierdo/derecho la centran */
+}
+¡Entendido! Quieres que el <h1> en .store-name ocupe todo el ancho del header y tenga algunos efectos para que se vea más atractivo, como el ejemplo anterior de Dragon Ball.
+
+Aquí tienes un CSS mejorado para tu .store-name y h1 que hará que se vean mucho mejor, centrados y con un efecto de "aura" o brillo que sugiere algo especial, siguiendo la temática de una tienda:
+
+CSS
+
+/* --- ESTILOS PARA EL NOMBRE DE LA TIENDA EN EL HEADER (MEJORADO) --- */
+.store-name {
+    display: flex; /* Usamos flexbox para centrar el contenido */
+    justify-content: center; /* Centra horizontalmente el h1 */
+    align-items: center; /* Centra verticalmente (si el header tiene altura, aunque aquí no sea un problema) */
+    padding: 20px 0; /* Un poco de padding arriba y abajo para que el texto respire */
+    width: 100%; /* ¡Esto asegura que ocupe todo el ancho disponible del header! */
+    box-sizing: border-box; /* Incluye padding en el ancho total */
+    /* Puedes añadir un color de fondo aquí si quieres que la barra del nombre de la tienda sea visible */
+    /* background-color: rgba(255, 192, 203, 0.1); */ /* Rosa muy claro, translúcido */
+}
+
+.store-name h1 {
+    font-family: 'Bangers', cursive; /* Una fuente divertida y llamativa */
+    color: #FFC0CB; /* Un color rosa claro para el nombre de la "Coneja Store" */
+    font-size: 3.5em; /* Un tamaño de fuente grande y legible */
+    letter-spacing: 2px; /* Espaciado entre letras para mejor lectura */
+    text-shadow:
+        0 0 10px rgba(255,255,255,0.7), /* Un brillo blanco sutil */
+        0 0 20px rgba(255,192,203,0.8), /* Un halo rosa brillante */
+        3px 3px 0px rgba(0,0,0,0.6); /* Un contorno oscuro para un efecto de relieve */
+    margin: 0; /* Elimina cualquier margen por defecto del h1 */
+    line-height: 1.2; /* Ajusta la altura de línea si el texto es muy grande */
+    white-space: nowrap; /* Evita que el texto se rompa en varias líneas */
+    text-align: center; /* Asegura el centrado si hay espacio extra */
+    transition: all 0.3s ease-in-out; /* Transición suave para los efectos hover */
+}
+
+.store-name h1:hover {
+    transform: scale(1.05); /* El texto se agranda ligeramente al pasar el ratón */
+    color: #FFF0F5; /* El color se vuelve un rosa aún más claro */
+    text-shadow:
+        0 0 15px rgba(255,255,255,0.9),
+        0 0 30px rgba(255,192,203,1),
+        4px 4px 0px rgba(0,0,0,0.8);
+}
+/* --- FIN ESTILOS NOMBRE TIENDA --- */
+
+/* Puedes añadir esto también a tu header si quieres un fondo más definido */
+header {
+    background: linear-gradient(180deg, rgba(255,192,203,0.1), rgba(255,192,203,0.05));
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+    margin-bottom: 30px;
+    padding: 10px 0; /* Ajusta el padding del header si es necesario */
+}
+
+    </style>
+
+</head>
+<body>
+ 
+        <header>
+ <body>
+    <div class="wrap">
+        <header>
+            <div class="store-name">
+                <h1>🐰 Coneja Store 🛍️</h1>
+            </div>
+        </header>
+
+        <main class="grid">
+            </main>
+    </div>
+</body>
+        </header>
+
+
+			<div class="wrap">
+<main class="grid">
+            <section class="card">
+                <h2>Top 20 Compradores ✨</h2>
+                <ul class="list" id="buyersList">
+                    <li class="item tier-1">
+                        <div class="aura"></div> <div class="rank">#1</div>
+                        <div class="meta">
+                            <div class="name">Kakarot Supremo <span class="badge ssj-god">SSJ GOD</span></div>
+                            <div class="sub">Comprador desde 2016 · 1,240 compras</div>
+                        </div>
+                        <div class="pill"><i class="fa-solid fa-fire"></i> Elite</div>
+                    </li>
+
+                    <li class="item tier-2">
+                        <div class="aura"></div> <div class="rank">#2</div>
+                        <div class="meta">
+                            <div class="name">Vegeta Príncipe <span class="badge rival">Rival</span></div>
+                            <div class="sub">Comprador desde 2017 · 1,020 compras</div>
+                        </div>
+                        <div class="pill"><i class="fa-solid fa-bolt"></i> Top</div>
+                    </li>
+
+                    <li class="item tier-3">
+                        <div class="aura"></div> <div class="rank">#3</div>
+                        <div class="meta">
+                            <div class="name">Piccolo Sabio <span class="badge maestro">Maestro</span></div>
+                            <div class="sub">Comprador desde 2018 · 820 compras</div>
+                        </div>
+                        <div class="pill"><i class="fa-solid fa-shield-halved"></i> Pro</div>
+                    </li>
+
+                    <li class="item tier-4">
+                        <div class="aura"></div> <div class="rank">#4</div>
+                        <div class="meta">
+                            <div class="name">Trunks Viajero <span class="badge default">Temporal</span></div>
+                            <div class="sub">Comprador desde 2019 · 610 compras</div>
+                        </div>
+                        <div class="pill default">+</div>
+                    </li>
+                    
+                    <li class="item tier-4">
+                        <div class="aura"></div> <div class="rank">#5</div>
+                        <div class="meta">
+                            <div class="name">Goten Joven <span class="badge default">Joven</span></div>
+                            <div class="sub">Comprador desde 2020 · 540 compras</div>
+                        </div>
+                        <div class="pill default">+</div>
+                    </li>
+					                    <li class="item tier-4">
+                        <div class="aura"></div> <div class="rank">#6</div>
+                        <div class="meta">
+                            <div class="name">Goten Joven <span class="badge default">Joven</span></div>
+                            <div class="sub">Comprador desde 2020 · 540 compras</div>
+                        </div>
+                        <div class="pill default">+</div>
+                    </li>
+					                    <li class="item tier-4">
+                        <div class="aura"></div> <div class="rank">#7</div>
+                        <div class="meta">
+                            <div class="name">Goten Joven <span class="badge default">Joven</span></div>
+                            <div class="sub">Comprador desde 2020 · 540 compras</div>
+                        </div>
+                        <div class="pill default">+</div>
+                    </li>
+					                    <li class="item tier-4">
+                        <div class="aura"></div> <div class="rank">#8</div>
+                        <div class="meta">
+                            <div class="name">Goten Joven <span class="badge default">Joven</span></div>
+                            <div class="sub">Comprador desde 2020 · 540 compras</div>
+                        </div>
+                        <div class="pill default">+</div>
+                    </li>
+					                    <li class="item tier-4">
+                        <div class="aura"></div> <div class="rank">#9</div>
+                        <div class="meta">
+                            <div class="name">Goten Joven <span class="badge default">Joven</span></div>
+                            <div class="sub">Comprador desde 2020 · 540 compras</div>
+                        </div>
+                        <div class="pill default">+</div>
+                    </li>                    <li class="item tier-4">
+                        <div class="aura"></div> <div class="rank">#10</div>
+                        <div class="meta">
+                            <div class="name">Goten Joven <span class="badge default">Joven</span></div>
+                            <div class="sub">Comprador desde 2020 · 540 compras</div>
+                        </div>
+                        <div class="pill default">+</div>
+                    </li>
+                    </ul>
+					
+            </section>
+
+            <section class="card raffle-card">
+                <div class="raffle-header">
+                    <h2>✨ ¡Sorteo Exclusivo! ✨</h2>
+                    <span class="raffle-badge">¡Solo Top 20!</span>
+                </div>
+                <p class="raffle-description">¡Atención, guerreros de las compras! 🚀 Los <strong>5 compradores con más Ki</strong> (o sea, más puntos) están participando automáticamente en nuestro Mega Sorteo del mes. ¡Mucha suerte a los elegidos!</p>
+                
+                <div class="raffle-prize">
+                    <h3>🎁 El Premio Es: </h3>
+                    <div class="prize-content">
+                        <img src="esferas.png" alt="Esfera del Dragón" class="prize-image">
+                        <div class="prize-details">
+                            <h4>¡La Legendaria Esfera del Dragón de 4 Estrellas! 🌟</h4>
+                            <p>Con ella podrás invocar a Shenlong y pedir un deseo (o al menos decorar tu colección con estilo).</p>
+                        </div>
+                    </div>
+                    <button class="raffle-button">Ver Reglas del Sorteo <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+            <div class="right">
+                </div>
+        </main>
+    </div>
+        </main>
+    </div>
+</body>
